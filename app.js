@@ -1,52 +1,51 @@
+// Lista para guardar los nombres
 let listaDeAmigos = [];
 
+// Agregar un nombre a la lista
 function agregarAmigo() {
-  const inputNombre = document.getElementById('amigo');
-  const nombre = inputNombre.value;
+  let input = document.getElementById("amigo");
+  let nombre = input.value;
+
   if (nombre.trim() !== "") {
     listaDeAmigos.push(nombre.trim());
-    console.log(`Nombre agregado: ${nombre}`);
     mostrarLista();
-    inputNombre.value = ""; // Limpia el campo de texto después de agregar
+    input.value = ""; // Limpia el input
   } else {
-    alert("El campo de nombre no puede estar vacío.");
-    console.log("El nombre no puede estar vacío.");
+    alert("Por favor, escribe un nombre.");
   }
 }
 
+// Mostrar la lista en la página
 function mostrarLista() {
-  const listaElement = document.getElementById('listaAmigos');
-  listaElement.innerHTML = ""; // Limpia la lista visual
+  let lista = document.getElementById("listaAmigos");
+  lista.innerHTML = ""; // Limpia la lista
 
-  listaDeAmigos.forEach((nombre, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${index + 1}. ${nombre}`;
-    listaElement.appendChild(listItem);
-  });
+  for (let i = 0; i < listaDeAmigos.length; i++) {
+    let item = document.createElement("li");
+    item.textContent = (i + 1) + ". " + listaDeAmigos[i];
+    lista.appendChild(item);
+  }
 }
 
+// Sortear un nombre al azar
 function sortearAmigo() {
-  const resultadoElement = document.getElementById('resultado');
-  resultadoElement.innerHTML = ""; // Limpia el resultado previo
+  let resultado = document.getElementById("resultado");
+  resultado.innerHTML = ""; // Limpia el resultado
 
   if (listaDeAmigos.length === 0) {
-    console.log("La lista está vacía. Agrega nombres antes de hacer el sorteo.");
-    const mensaje = document.createElement('li');
-    mensaje.textContent = "La lista está vacía. Agrega nombres antes de hacer el sorteo.";
-    resultadoElement.appendChild(mensaje);
+    alert("No hay nombres en la lista para sortear.");
   } else {
-    const indiceAleatorio = Math.floor(Math.random() * listaDeAmigos.length);
-    const nombreSorteado = listaDeAmigos[indiceAleatorio];
-    console.log(`El nombre sorteado es: ${nombreSorteado}`);
-
-    const ganador = document.createElement('li');
-    ganador.textContent = `El nombre sorteado es: ${nombreSorteado}`;
-    resultadoElement.appendChild(ganador);
+    let indice = Math.floor(Math.random() * listaDeAmigos.length);
+    let ganador = listaDeAmigos[indice];
+    let item = document.createElement("li");
+    item.textContent = "El nombre sorteado es: " + ganador;
+    resultado.appendChild(item);
   }
 }
-// Agregar evento para capturar Enter en el input
-document.getElementById('amigo').addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      agregarAmigo();
-    }
-  });
+
+// Detectar Enter para agregar directamente
+document.getElementById("amigo").addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    agregarAmigo();
+  }
+});
